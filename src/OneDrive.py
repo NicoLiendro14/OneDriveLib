@@ -13,20 +13,8 @@ class OneDrive:
         self.refresh_token = None
         self.path_credentials = path_credentials
 
-    def get_refresh_token(self, refresh_token):
-        auth_code = {'refresh_token': refresh_token}
-        grant_type = 'refresh_token'
+    def get_token(self, auth_code, grant_type):
         url, params = self.build_request(auth_code, grant_type)
-        response = requests.post(url, data=params)
-        json_response = json.loads(response.text)
-        self.access_token = json_response['access_token']
-        new_refresh_token = json_response['refresh_token']
-        self.refresh_token = new_refresh_token
-        return json_response
-
-    def get_access_token(self, code):
-        auth_code = {'code': code}
-        url, params = self.build_request(auth_code)
         response = requests.post(url, data=params)
         json_response = json.loads(response.text)
         self.access_token = json_response['access_token']
@@ -58,6 +46,7 @@ class OneDrive:
         response = requests.get(url, headers=headers)
         print(response.text)
         return response
+
 
 
 
