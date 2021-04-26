@@ -87,8 +87,6 @@ class OneDrive:
     def get_items(self):
         """ List children in the root of the current user's drive.
 
-        Create a json with credentials.
-
         Returns
         -------
         dict
@@ -98,6 +96,22 @@ class OneDrive:
             'Authorization': 'Bearer ' + self.access_token
         }
         url = "https://graph.microsoft.com/v1.0/me/drive/root/children"
+        response = requests.get(url, headers=headers)
+        json_response = json.loads(response.text)
+        return json_response
+
+    def get_recent_files(self):
+        """ List children in the root of the current user's drive.
+
+        Returns
+        -------
+        dict
+            recent files
+        """
+        headers = {
+            'Authorization': 'Bearer ' + self.access_token
+        }
+        url = "https://graph.microsoft.com/v1.0/me/drive/recent"
         response = requests.get(url, headers=headers)
         json_response = json.loads(response.text)
         return json_response
